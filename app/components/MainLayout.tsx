@@ -1,19 +1,33 @@
-import { Outlet } from "react-router";
+import { Outlet, useNavigate, useNavigation } from "react-router";
 import { SidebarProvider, SidebarTrigger } from "./ui/sidebar";
 import AppSidebar from "./AppSidebar";
+import { useEffect } from "react";
+import api from "~/lib/axios";
 
 const MainLayout = () => {
-  return (
-    <SidebarProvider>
-      <AppSidebar />
-      <main className="p-4 w-full flex flex-col">
-        <SidebarTrigger />
-        <div className="p-4 border w-full flex-1 rounded">
-          <Outlet />
-        </div>
-      </main>
-    </SidebarProvider>
-  );
+	const navigation = useNavigation();
+	const navigate = useNavigate();
+	useEffect(() => {
+		const checkToken = async () => {
+			try {
+				await api.get("/auth/check");
+			} catch (error) {
+				return navigate("/login");
+			}
+		};
+		checkToken();
+	}, [navigation.location]);
+	return (
+		<SidebarProvider>
+			<AppSidebar />
+			<main className="p-4 w-full flex flex-col">
+				<SidebarTrigger />
+				<div className="p-4 border w-full flex-1 rounded">
+					<Outlet />
+				</div>
+			</main>
+		</SidebarProvider>
+	);
 };
 
 export default MainLayout;
