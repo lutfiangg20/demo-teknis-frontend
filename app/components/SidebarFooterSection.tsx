@@ -13,12 +13,18 @@ import {
 } from "./ui/dropdown-menu";
 import api from "~/lib/axios";
 import type { AxiosError } from "axios";
+import { useLoaderData, useNavigate } from "react-router";
+import type { clientLoader } from "./MainLayout";
+import Cookies from "js-cookie";
 
 const SidebarFooterSection = () => {
+	const navigate = useNavigate();
+	const { user } = useLoaderData<typeof clientLoader>();
 	const handleLogout = async () => {
 		try {
-			const res = await api.get("/auth/logout");
-			console.log("res", res.data);
+			await api.get("/auth/logout");
+			Cookies.remove("token");
+			return navigate("/login");
 		} catch (error) {
 			const err = error as AxiosError;
 			console.error(err.response);
@@ -31,7 +37,7 @@ const SidebarFooterSection = () => {
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<SidebarMenuButton>
-								<User2 /> Username
+								<User2 /> {user.name}
 								<ChevronUp className="ml-auto" />
 							</SidebarMenuButton>
 						</DropdownMenuTrigger>
@@ -40,7 +46,7 @@ const SidebarFooterSection = () => {
 							className="w-[--radix-popper-anchor-width]"
 						>
 							<DropdownMenuItem>
-								<span>Account</span>
+								<span>{user.name}</span>
 							</DropdownMenuItem>
 							<DropdownMenuItem>
 								<span>Billing</span>

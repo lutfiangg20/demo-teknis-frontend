@@ -34,6 +34,7 @@ const page = () => {
 			const res = await api.post<{
 				data: { accessToken: string; expiredAt: number };
 			}>("/auth/login", formData);
+			console.log("res", res.data);
 			Cookies.set("token", res.data.data.accessToken, {
 				expires: 7,
 			});
