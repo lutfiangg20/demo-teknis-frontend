@@ -12,6 +12,9 @@ export default [
 	route("signup", "./routes/Signup/page.tsx"),
 
 	layout("./components/MainLayout.tsx", [
-		...prefix("user", [route("profile", "./routes/User/profile/page.tsx")]),
+		...prefix("user", [
+			route("profile", "./routes/User/profile/page.tsx"),
+			route("all-users", "./routes/User/allUsers/page.tsx"),
+		]),
 	]),
 ] satisfies RouteConfig;

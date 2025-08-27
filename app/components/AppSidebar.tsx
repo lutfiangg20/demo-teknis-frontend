@@ -10,6 +10,7 @@ import {
 } from "~/components/ui/sidebar";
 import { menuList } from "./menuList";
 import SidebarFooterSection from "./SidebarFooterSection";
+import { Link } from "react-router";
 
 const AppSidebar = () => {
 	return (
@@ -22,10 +23,10 @@ const AppSidebar = () => {
 							{menuList.map((item) => (
 								<SidebarMenuItem key={item.title}>
 									<SidebarMenuButton asChild>
-										<a href={item.url}>
+										<Link to={item.url}>
 											<item.icon />
 											<span>{item.title}</span>
-										</a>
+										</Link>
 									</SidebarMenuButton>
 								</SidebarMenuItem>
 							))}

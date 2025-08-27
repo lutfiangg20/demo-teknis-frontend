@@ -1,29 +1,14 @@
-import { Calendar, Inbox, Search, Settings, User } from "lucide-react";
+import { User, Users } from "lucide-react";
 
 export const menuList = [
 	{
 		title: "Profile",
-		url: "user/profile",
+		url: "/user/profile",
 		icon: User,
 	},
 	{
-		title: "Inbox",
-		url: "#",
-		icon: Inbox,
-	},
-	{
-		title: "Calendar",
-		url: "#",
-		icon: Calendar,
-	},
-	{
-		title: "Search",
-		url: "#",
-		icon: Search,
-	},
-	{
-		title: "Settings",
-		url: "#",
-		icon: Settings,
+		title: "All Users",
+		url: "/user/all-users",
+		icon: Users,
 	},
 ];

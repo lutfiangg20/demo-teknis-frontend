@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import type { Payload } from "~/types/payload";
 import { redirect } from "react-router";
+import FormSection from "./FormSection";
 
 export type User = {
 	id: number;
@@ -26,7 +27,18 @@ export const clientLoader = async () => {
 };
 const page = ({ loaderData }: Route.ComponentProps) => {
 	const { user } = loaderData;
-	return <div>{user.name}</div>;
+	return (
+		<div className="w-full h-full space-y-10 grid grid-cols-12 gap-4">
+			<div className="flex flex-col h-full items-center w-full col-span-2 border rounded-xl p-4 space-y-4">
+				<img className="rounded-full bg-gray-200 w-20 h-20" />
+				<div className="">
+					<p>{user.name}</p>
+					<p className="text-sm text-gray-500">{user.email}</p>
+				</div>
+			</div>
+			<FormSection />
+		</div>
+	);
 };
 
 export default page;

@@ -1,0 +1,101 @@
+import { useLoaderData } from "react-router";
+import type { clientLoader } from "./page";
+import { Label } from "~/components/ui/label";
+import { Input } from "~/components/ui/input";
+import { Textarea } from "~/components/ui/textarea";
+import FormInput from "./FormInput";
+import { useState } from "react";
+import { Button } from "~/components/ui/button";
+import { Edit } from "lucide-react";
+
+export type CreateUser = {
+	name: string;
+	phoneNumber: string;
+	email: string;
+	address: string;
+	bio: string;
+	dateOfBirth: string;
+};
+
+const FormSection = () => {
+	const { user } = useLoaderData<typeof clientLoader>();
+	const [formData, setFormData] = useState<CreateUser>({
+		name: user.name,
+		phoneNumber: user.phoneNumber,
+		email: user.email,
+		address: user.address,
+		bio: user.bio,
+		dateOfBirth: user.dateOfBirth,
+	});
+	const [isEdit, setIsEdit] = useState(false);
+	return (
+		<div className="relative w-full space-y-10 col-span-10 p-10 border rounded-xl">
+			{!isEdit && (
+				<Button
+					onClick={() => setIsEdit(true)}
+					className="absolute right-4 top-4"
+				>
+					<Edit />
+				</Button>
+			)}
+			<div className="grid grid-cols-12">
+				<Label className="col-span-6">Name</Label>
+				{isEdit ? (
+					<Input className="col-span-6" defaultValue={user.name} />
+				) : (
+					<Label className="col-span-6">{user.name}</Label>
+				)}
+			</div>
+			<div className="grid grid-cols-12">
+				<Label className="col-span-6">Email</Label>
+				{isEdit ? (
+					<Input className="col-span-6" defaultValue={user.email} />
+				) : (
+					<Label className="col-span-6">{user.email}</Label>
+				)}
+			</div>
+			<div className="grid grid-cols-12">
+				<Label className="col-span-6">Phone Number</Label>
+				{isEdit ? (
+					<Input className="col-span-6" defaultValue={user.phoneNumber} />
+				) : (
+					<Label className="col-span-6">{user.phoneNumber}</Label>
+				)}
+			</div>
+			<div className="grid grid-cols-12">
+				<Label className="col-span-6">Date of Birth</Label>
+				{isEdit ? (
+					<Input className="col-span-6" defaultValue={user.dateOfBirth} />
+				) : (
+					<Label className="col-span-6">{user.dateOfBirth}</Label>
+				)}
+			</div>
+			<div className="grid grid-cols-12">
+				<Label className="col-span-6">Address</Label>
+				{isEdit ? (
+					<Textarea className="col-span-6" defaultValue={user.address} />
+				) : (
+					<Label className="col-span-6">{user.address}</Label>
+				)}
+			</div>
+			<div className="grid grid-cols-12">
+				<Label className="col-span-6">Bio</Label>
+				{isEdit ? (
+					<Textarea className="col-span-6" defaultValue={user.bio} />
+				) : (
+					<Label className="col-span-6">{user.bio}</Label>
+				)}
+			</div>
+			{isEdit && (
+				<div className="flex justify-end gap-2">
+					<Button>Save</Button>
+					<Button variant={"outline"} onClick={() => setIsEdit(false)}>
+						Cancle
+					</Button>
+				</div>
+			)}
+		</div>
+	);
+};
+
+export default FormSection;
